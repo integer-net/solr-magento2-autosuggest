@@ -19,7 +19,12 @@ return AppConfig::defaultConfig()
      */
     ->withLoadApplicationCallback(function()
     {
-        require  '../app/bootstrap.php';
+        foreach (['app/bootstrap.php', '../app/bootstrap.php'] as $bootstrapFile) {
+            if (\file_exists($bootstrapFile)) {
+                require $bootstrapFile;
+                break;
+            }
+        }
         $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
 
         $om = $bootstrap->getObjectManager();
@@ -32,8 +37,8 @@ return AppConfig::defaultConfig()
      *
      * This is only used if you use the default file based cache.
      *
-     * use directory relative to cwd (Magento root)
+     * use directory relative to cwd (document root)
      */
-    ->withCacheBaseDir('../var/cache/integernet_solr')
+    ->withCacheBaseDir(\is_dir('var/cache') ? 'var/cache/integernet_solr' : '../var/cache/integernet_solr')
     ;
 

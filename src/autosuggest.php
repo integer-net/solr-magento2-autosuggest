@@ -120,7 +120,12 @@ class Bootstrap
 
     private function initAutoload()
     {
-        require_once '../vendor/autoload.php';
+        foreach (['vendor/autoload.php', '../vendor/autoload.php'] as $autoloadFile) {
+            if (\file_exists($autoloadFile)) {
+                require_once $autoloadFile;
+                return;
+            }
+        }
     }
 
     private function initRequest()
