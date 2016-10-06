@@ -1,0 +1,29 @@
+{
+  "name": "integer-net/solr-magento2-autosuggest",
+  "description": "",
+  "require": {
+    "php": "~5.6.0|^7.0",
+    "integer-net/solr-magento2": "*"
+  },
+  "require-dev": {
+  },
+  "type": "magento2-component",
+  "version": "0.1.0",
+  "license": [
+    "Proprietary"
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:integer-net/Solr2.git"
+    }
+  ],
+  "extra": {
+    "map": [
+      [
+        "src/*",
+        ""
+      ]
+    ]
+  }
+}
