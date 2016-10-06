@@ -3,9 +3,12 @@
   "description": "",
   "require": {
     "php": "~5.6.0|^7.0",
-    "integer-net/solr-magento2": "*"
+    "integer-net/solr-pro": "*"
   },
   "require-dev": {
+  },
+  "suggest": {
+    "integer-net/solr-magento2": "With the default configuration, this component only works together with a Magento 2 installation and the IntegerNet_Solr extension"
   },
   "type": "magento2-component",
   "version": "0.1.0",
@@ -15,7 +18,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:integer-net/Solr2.git"
+      "url": "git@github.com:integer-net/solr-pro.git"
     }
   ],
   "extra": {
