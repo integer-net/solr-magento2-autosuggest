@@ -11,9 +11,9 @@
  */
 
 namespace IntegerNet\SolrSuggest\Plain;
-/*
- * NO USE STATEMENTS BEFORE AUTOLOADER IS INITIALIZED!
- */
+    /*
+     * NO USE STATEMENTS BEFORE AUTOLOADER IS INITIALIZED!
+     */
 
 /**
  * Class used for customization in autosuggest.config.php
@@ -120,6 +120,8 @@ class Bootstrap
 
     private function initAutoload()
     {
+        spl_autoload_register([$this, 'autoload']);
+
         foreach (['vendor/autoload.php', '../vendor/autoload.php'] as $autoloadFile) {
             if (\file_exists($autoloadFile)) {
                 require_once $autoloadFile;
@@ -154,6 +156,27 @@ class Bootstrap
         echo $response->getBody();
     }
 
+    public function autoload($className)
+    {
+        $className = ltrim($className, '\\');
+        $fileName  = '';
+        if ($lastNsPos = strripos($className, '\\')) {
+            $namespace = substr($className, 0, $lastNsPos);
+            $className = substr($className, $lastNsPos + 1);
+            $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+        }
+        $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
+
+        $directoryPrefix = 'lib' . DIRECTORY_SEPARATOR . 'internal' . DIRECTORY_SEPARATOR;
+        if (is_file('..' . DIRECTORY_SEPARATOR . $directoryPrefix . $fileName)) { // using "pub" directory
+            require_once '..' . DIRECTORY_SEPARATOR . $directoryPrefix . $fileName;
+            return;
+        }
+
+        if (is_file($directoryPrefix . $fileName)) { // not using "pub" directory
+            require_once $directoryPrefix . $fileName;
+        }
+    }
 }
 
 \call_user_func(function() {
